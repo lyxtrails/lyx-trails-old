@@ -1,0 +1,37 @@
+declare const require: any
+import { Component } from '@angular/core';
+import * as $ from 'jquery';
+import { Http } from '@angular/http';
+const { readFile } = require('../app.js')
+const showdown = require('showdown');
+const converter = new showdown.Converter();
+
+@Component({
+  template:  `
+  <div style="overflow: auto">
+    <div class="nav-side-menu">
+      <div class="brand">Web Dev</div>
+        <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+        <div class="menu-list">
+          <ul id="menu-content" class="menu-content collapse out">
+
+            <li>HTML</li>
+
+            <li>CSS</li>
+
+            <li>JavaScript</li>
+
+            <li>React.js</li>
+
+            <li>Angular.js</li>
+
+            <li>Vue.js</li>
+
+          </ul>
+        </div>
+    </div>
+  </div>
+  `,
+  styleUrls: ['../app.component.css'],
+})
+export class CSWebDevComponent { }

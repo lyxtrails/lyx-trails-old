@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css?family=UnifrakturCook:700');
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #292b2c!important;
+}
+.plain_text {
+  color: white;
+}
+a:link {
+  color: white;
+}
+a:visited {
+  color: white;
+}
+a:hover {
+  color: white;
+}
+ul.nav-pills {
+  top: 4em;
+  position: fixed;
+}
+.nav-pills>li>a.active {
+  background-color: #a8a8a8!important;
+}
+body {
+  height:100%;
+  padding: 70px 20px 0px 20px;
+  margin-bottom: 60px;
+  color: white!important;
+  background-color:#292b2c!important;
+}
+.page-body {
+  padding-left: 5em;
+  padding-top: 60px;
+}
+.bg-dark {
+  background-color: #363A3D!important;
+}
+.table-inverse {
+  color: white !important;
+}
+code {
+  display: inline-block;
+  width: 700px;
+  border: 1px solid #000033;
+  background-color: #EEE;
+  padding: 10px;
+  font: 300 14px tahoma;
+  color: black;
+}
+img.ex-link {
+  margin: 5px 5px;
+  padding-bottom: 4px;
+  height: 18px;
+  width: 50px;
+}
+/*table{
+  table-layout: fixed;
+}*/
+@font-face {
+  font-family: UC;
+  src: url('/fonts/UnifrakturCook-Bold.ttf');
+}
+@font-face {
+  font-family: 'dancingman';
+  src: url('assets/fonts/dancingman.ttf')  format('truetype');
+}
+ruby { ruby-align: center; }
+rt, rp {font-size: 70%;}

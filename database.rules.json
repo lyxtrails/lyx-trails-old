@@ -1,0 +1,19 @@
+{
+  "rules": {
+    "Tables": {
+      "GameList": {
+        // ".read": "auth.uid === 'kuorFSIRMGXa5QY3vrS6uDxhhia2'",
+        ".read": true,
+        ".write": false
+      },
+      "$other": {
+        ".read": true,
+        ".write": false
+      }
+    },
+    "$other": {
+      ".read": true,
+      ".write": false
+    }
+  }
+}

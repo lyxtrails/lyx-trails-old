@@ -1,0 +1,60 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark" aria-expanded="false">
+  <!-- Brand -->
+  <a class="navbar-brand" style="font-family: 'UnifrakturCook', Arial;">LYX Trails</a>
+  <!-- Collapse button -->
+  <button type="button" class="navbar-toggler collapsed" (click)="isCollapsed = !isCollapsed">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <!-- Links -->
+  <div class="navbar-collapse collapse" id="navbar-content" [attr.aria-expanded]="!isCollapsed" [ngClass]="{collapse: !isCollapsed}">
+    <ul class="navbar-nav mr-auto" (click)="isCollapsed = !isCollapsed">
+      <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+        <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
+      </li>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" routerLink="/blog" routerLinkActive="active">Blog</a>
+      </li>
+      <li class="nav-item dropdown" [routerLinkActive]="['active']">
+        <a class="nav-link dropdown-toggle" href="#" id="csDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Computer Science
+        </a>
+        <div class="dropdown-menu bg-dark" aria-labelledby="#csDropDown">
+          <a class="dropdown-item" routerLink="/cs/webDev" routerLinkActive="active">Web Development</a>
+          <a class="dropdown-item" routerLink="/cs/appDev" routerLinkActive="active">App Development</a>
+          <a class="dropdown-item" routerLink="/cs/ai" routerLinkActive="active">Artificial Intelligence</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown" [routerLinkActive]="['active']">
+        <a class="nav-link dropdown-toggle" href="#" id="langDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Language
+        </a>
+        <div class="dropdown-menu bg-dark" aria-labelledby="#langDropdown">
+          <a class="dropdown-item" routerLink="/lang/en" routerLinkActive="active">English</a>
+          <a class="dropdown-item" routerLink="/lang/ch" routerLinkActive="active">Chinese</a>
+          <a class="dropdown-item" routerLink="/lang/jp" routerLinkActive="active">Japanese</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown" [routerLinkActive]="['active']">
+        <a class="nav-link dropdown-toggle" href="#" id="gameDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Game
+        </a>
+        <div class="dropdown-menu bg-dark" aria-labelledby="#gameDropdown">
+          <a class="dropdown-item" routerLink="/game/list" routerLinkActive="active">List</a>
+          <a class="dropdown-item" routerLink="/game/guide" routerLinkActive="active">Guide</a>
+          <a class="dropdown-item" routerLink="/game/resource" routerLinkActive="active">Resource</a>
+        </div>
+      </li>
+    </ul>
+
+<!--     <div *ngIf="!user; else signout">
+      <a (click)="login()">Login</a>
+    </div>
+    <ng-template #signout>
+      {{ user?.email }}&nbsp;&nbsp;&nbsp;&nbsp;
+      <a (click)="logout()">Logout</a>
+    </ng-template> -->
+    
+  </div>
+</nav>
+<router-outlet></router-outlet>

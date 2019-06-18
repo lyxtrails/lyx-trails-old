@@ -1,0 +1,12 @@
+Unlockables
+  - Break all Mr. Everywhere in single walkthrough
+    - Walking Shoes: Increase walking speed (not sprint)
+    - The Essence of Defense: Make block more effective
+  - Complete game on easy or normal difficulty
+    - Albert-01R
+    - Madhouse Difficulty
+  - Complete game within 4 hours on any difficulty
+    - Circular Saw: Strongest meele weapon
+    - X-Ray Glasses: Reveal the location of items (unlimited duration psychostimulants)
+  - Complete game on madhouse difficulty
+    - Infinite Ammoo

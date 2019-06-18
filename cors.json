@@ -1,0 +1,7 @@
+[
+  {
+    "origin": ["http://localhost:5000", "http://localhost:4200", "https://lyx-trails.firebaseapp.com/"],
+    "method": ["GET"],
+    "maxAgeSeconds": 3600
+  }
+]
