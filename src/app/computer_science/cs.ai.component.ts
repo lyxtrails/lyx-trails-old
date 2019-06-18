@@ -2,11 +2,12 @@ declare const require: any
 import { Component } from '@angular/core';
 import * as $ from 'jquery';
 import { Http } from '@angular/http';
+import { aiDoc } from './docs/ai';
 const { readFile } = require('../app.js')
 const showdown = require('showdown');
 const converter = new showdown.Converter();
 @Component({
-  template:  `
+  template: `
   <div style="overflow: auto">
     <div class="nav-side-menu">
       <div class="brand">AI</div>
@@ -99,7 +100,7 @@ const converter = new showdown.Converter();
   styleUrls: ['../app.component.css'],
 })
 export class CSAIComponent {
-  html = '$$f(x|\\mu,\\sigma^2)=\\frac{1}{\\sqrt{2\\pi\\sigma^2}}e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}$$';
+  html = aiDoc.homeHtml;
   constructor(private http:Http) { }
   readFile(file) {
     this.html = '<p>Loading...</p>';
