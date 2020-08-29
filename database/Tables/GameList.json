@@ -1,86 +1,21 @@
 {
   "1st":
   {
-    "アストラルチェイン":{
-      "date": "2019.08.30",
-      "name": "アストラルチェイン",
-      "platform": "NS"
-    },
-    "ルーンファクトリー４ スペシャル":{
-      "date": "2019.07.25",
-      "name": "ルーンファクトリー４ スペシャル",
-      "platform": "NS"
-    },
     "幻影夢e忍者ネプテューヌ":{
       "date": "TBD",
       "name": "幻影夢e忍者ネプテューヌ",
       "platform": "PS4"
     },
-    "SAO Alicization Lycoris":{
-      "date": "TBD",
-      "name": "SAO Alicization Lycoris",
-      "platform": "PS4"
-    },
     "ドラクエ11S":{
-      "date": "2019.09.27",
+      "date": "Released",
       "name": "ドラクエ11S",
       "platform": "NS"
-    },
-    "アズールレーン crosswave":{
-      "date": "2019.08.29",
-      "name": "アズールレーン crosswave",
-      "platform": "PS4"
-    },
-    "Pokémon Sword Shield": {
-      "date": "2019.11.15",
-      "name": "Pokémon Sword/Shield",
-      "platform": "NS"
-    },
-    "ファイアーエムブレム 風花雪月": {
-      "date": "2019.07.26",
-      "name": "ファイアーエムブレム 風花雪月",
-      "platform": "NS"
-    },
-    "イースIX モンストルム　ノクス": {
-      "date": "2019.09.26",
-      "name": "イースIX モンストルム　ノクス",
-      "platform": "PS4"
-    },
-    "Death Stranding":
-    {
-      "date": "2019.11.08",
-      "name": "Death Stranding",
-      "platform": "PS4"
-    },
-    "COD Modern Warfare":
-    {
-      "date": "2019.10.25",
-      "name": "COD Modern Warfare",
-      "platform": "PS4"
-    },
-    "FF7 Remake":
-    {
-      "date": "2020.03.03",
-      "name": "FF7 Remake",
-      "platform": "PS4"
     },
     "The Last of Us Part 2":
     {
       "date": "TBD",
       "name": "The Last of Us part 2",
       "platform": "PS4"
-    },
-    "ドラゴンボールZ カカロット":
-    {
-      "date": "2020",
-      "name": "ドラゴンボールZ カカロット",
-      "platform": "PS4"
-    },
-    "SDガンダム ジージェネレーション クロスレイズ":
-    {
-      "date": "2019",
-      "name": "SDガンダム ジージェネレーション クロスレイズ",
-      "platform": "PS4/NS"
     }
   },
   "2nd": {
@@ -100,41 +35,20 @@
       "platform": "PS4"
     },
     "ペルソナ5 ザ ロイヤル":{
-      "date": "2019.10.31",
+      "date": "Released",
       "name": "ペルソナ5 ザ ロイヤル",
       "platform": "PS4"
     },
-    "ゼルダの伝説 夢をみる島":{
-      "date": "2019.09.26",
-      "name": "ゼルダの伝説 夢をみる島",
+    "鬼ノ哭ク邦":{
+      "date": "Released",
+      "name": "鬼ノ哭ク邦",
       "platform": "NS"
-    },
-    "Code Vein":{
-      "date": "2019.09.20",
-      "name": "Code Vein",
-      "platform": "PS4"
-    },
-    "Bloodstained Ritual of the Night":{
-      "date": "2019.06.18",
-      "name": "Bloodstained: Ritual of the Night",
-      "platform": "PS4/NS"
     },
     "スーパーロボット大戦T":
     {
       "date": "Released",
       "name": "スーパーロボット大戦T",
       "platform": "PS4/NS"
-    },
-    "イース セルセタの樹海　改": {
-      "date": "Released",
-      "name": "イース セルセタの樹海:改",
-      "platform": "PS4"
-    },
-    "Pokemon Let's Go":
-    {
-      "date": "Released",
-      "name": "Pokemon Let's Go",
-      "platform": "NS"
     },
     "Days Gone":
     {
@@ -145,11 +59,6 @@
   },
   "3rd":
   {
-    "ケイデンス オブ ハイラル": {
-      "date": "2019.06.14",
-      "name": "ケイデンス オブ ハイラル",
-      "platform": "NS"
-    },
     "Death end re;Quest":
     {
       "date": "Released",
@@ -185,12 +94,6 @@
       "date": "Released",
       "name": "神獄塔 メアリスケルター",
       "platform": "PSV"
-    },
-    "ワンピース ワールドシーカー":
-    {
-      "date": "Released",
-      "name": "ワンピース ワールドシーカー",
-      "platform": "PS4"
     }
   }
 }
