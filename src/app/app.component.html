@@ -47,13 +47,13 @@
       </li>
     </ul>
 
-<!--     <div *ngIf="!user; else signout">
-      <a (click)="login()">Login</a>
-    </div>
-    <ng-template #signout>
-      {{ user?.email }}&nbsp;&nbsp;&nbsp;&nbsp;
+    <div *ngIf="auth.user | async as user; else showLogin">
+      {{ user.email }}&nbsp;&nbsp;&nbsp;&nbsp;
       <a (click)="logout()">Logout</a>
-    </ng-template> -->
+    </div>
+    <ng-template #showLogin>
+      <a (click)="login()">Login</a>
+    </ng-template>
     
   </div>
 </nav>

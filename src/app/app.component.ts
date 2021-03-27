@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { AngularFireAuth } from "@angular/fire/auth";
+import { Observable } from 'rxjs';
+
+import * as firebase from 'firebase/app';
+
 
 @Component({
   selector: 'app-root',
@@ -7,4 +12,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'LYX TRAILS';
+
+  constructor(private auth: AngularFireAuth) {}
+
+  login() {
+    this.auth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  }
+
+  logout() {
+     this.auth.auth.signOut();
+  }
+
 }

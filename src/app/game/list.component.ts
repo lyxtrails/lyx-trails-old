@@ -1,24 +1,57 @@
 import { Component } from '@angular/core';
 
 import { AngularFireDatabase } from '@angular/fire/database';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
 @Component({
   template: `
-    <table class="table table-inverse" style="table-layout: fixed; width:800px;">
+  <div *ngIf="isAuthorized === false; else showGameList">
+    You are not authorized to view this page.
+  </div>
+  <ng-template #showGameList>
+    <table class="table table-inverse" style="table-layout: fixed;">
       <thead><th style="border:none"><strong>1st</strong></th></thead>
       <tbody>
         <tr *ngFor="let game of gameList_1st | async">
           <td>{{ game.name }}</td>
           <td>{{ game.platform }}</td>
           <td>{{ game.date }}</td>
+          <td *ngIf="editMode" style="border:none">
+            <a (click)="removeItem(game.name)" style="color:#e05122;
+               padding-left: 20px;">Remove</a>
+          </td>
+        </tr>
+        <tr *ngIf="editMode">
+          <td>
+            <mat-form-field>
+              <mat-label style="color:white">Game Name</mat-label>
+              <input matInput placeholder="Kiseki">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-label style="color:white">Platform</mat-label>
+              <input matInput placeholder="PS4/NS/etc">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-label style="color:white">Release Date</mat-label>
+              <input matInput placeholder="2020.01.01 or TBD or Released">
+            </mat-form-field>
+          </td>
+          <td style="border:none;">
+            <a (click)="addItem('Tables/GameList/1st')" style="padding-left:20px;
+               cursor:pointer; color:#009111;">Add</a>
+          </td>
         </tr>
       </tbody>
     </table>
 
     <br>
 
-    <table class="table table-inverse" style="table-layout: fixed; width:800px;">
+    <table class="table table-inverse" style="table-layout: fixed;">
       <thead><th style="border:none"><strong>2nd</strong></th></thead>
       <tbody>
         <tr *ngFor="let game of gameList_2nd | async">
@@ -31,7 +64,7 @@ import { Observable, of } from 'rxjs';
 
     <br>
 
-    <table class="table table-inverse" style="table-layout: fixed; width:800px;">
+    <table class="table table-inverse" style="table-layout: fixed;">
       <thead><th style="border:none"><strong>3rd</strong></th></thead>
       <tbody>
         <tr *ngFor="let game of gameList_3rd | async">
@@ -41,9 +74,13 @@ import { Observable, of } from 'rxjs';
         </tr>
       </tbody>
     </table>
+  </ng-template>
   `,
+  styleUrls: ['../app.component.css'],
 })
 export class GameListComponent {
+  isAuthorized: boolean;
+  editMode: boolean;
   gameList_1st: Observable<any>;
   gameList_2nd: Observable<any>;
   gameList_3rd: Observable<any>;
@@ -56,9 +93,13 @@ export class GameListComponent {
     } else if (a == "TBD" || b == "TBD") {
       return a == "TBD" ? 1 : -1;
     } else if (a.length > 3 && b.length > 3) {
+      // If the same year
       if (a.substring(0, 4) == b.substring(0, 4)) {
+        // If the date contains month
         if (a.length > 6 && b.length > 6) {
+          // If the same month
           if (a.substring(5, 7) == b.substring(5, 7)) {
+            // If full date, then compare day
             if (a.length == 10 && b.length == 10) {
               return a.substring(8, 10) > b.substring(8, 10) ? 1 : -1;
             } else {
@@ -107,20 +148,49 @@ export class GameListComponent {
     }
   }
 
-  constructor(db: AngularFireDatabase) {
-    db.list('Tables/GameList/1st').valueChanges()
-    .subscribe((list) => { 
-      this.gameList_1st = of(this.mergeSort(list))
-    }, (err) => { console.log(err.code) });
+  addItem(tableName: string) {
+    console.log(tableName)
+  }
 
-    db.list('Tables/GameList/2nd').valueChanges()
-    .subscribe((list) => { 
-      this.gameList_2nd = of(this.mergeSort(list)) 
-    }, (err) => { console.log(err.code) });
+  removeItem(itemName: string) {
+    console.log(itemName)
+  }
 
-    db.list('Tables/GameList/3rd').valueChanges()
-    .subscribe((list) => { 
-      this.gameList_3rd = of(this.mergeSort(list))  
-    }, (err) => { console.log(err.code) });
+  constructor(db: AngularFireDatabase, route: ActivatedRoute) {
+
+    route.queryParams.subscribe(params => {
+        this.editMode = params['editMode'];
+    });
+
+    this.isAuthorized = true;
+    const tableNames = [
+      'Tables/GameList/1st',
+      'Tables/GameList/2nd',
+      'Tables/GameList/3rd',
+    ]
+    tableNames.forEach((tableName) => {
+      db.list(tableName).valueChanges()
+      .subscribe((list) => { 
+        switch(tableName) {
+          case 'Tables/GameList/1st':
+            this.gameList_1st = of(this.mergeSort(list))
+            break;
+          case 'Tables/GameList/2nd':
+            this.gameList_2nd = of(this.mergeSort(list))
+            break;
+          case 'Tables/GameList/3rd':
+            this.gameList_3rd = of(this.mergeSort(list))
+            break;
+          default:
+            throw 'Unknown table name'
+        }
+      }, (err) => {
+        if (err.code === 'PERMISSION_DENIED') {
+          this.isAuthorized = false;
+        }
+        console.log(err.code) 
+      });
+
+    })
   }
 }

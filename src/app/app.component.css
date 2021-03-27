@@ -112,7 +112,7 @@ a {
 }
 .nav-side-menu li a {
   text-decoration: none;
-  color: #e1ffff;
+  color: #e1ffff; /* light blue */
 }
 .nav-side-menu li a i {
   padding-left: 10px;
