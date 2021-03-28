@@ -180,33 +180,49 @@ export class GameListComponent {
     })
   }
 
+  // This function compares 2 objects based on their months by the following criteria.
+  // 1. Released is after TBD.
+  // 2. TBD is after the one that has release date.
+  // 3. Dates are sorted chronologically.
+  // 4. Less specific dates are put before mroe specific date (e.g. 2000.01 is before 2000.01.01)
   compare(obj1: any, obj2: any) {
     const a = obj1.date;
     const b = obj2.date;
     if (a == "Released" || b == "Released") {
+      // Put a after b is a is Released, since we don't care the order if
+      // both released
       return a == "Released" ? 1 : -1;
     } else if (a == "TBD" || b == "TBD") {
+      // Put a after b is a is TBD, since we don't care the order if both
+      // TBD
       return a == "TBD" ? 1 : -1;
     } else if (a.length > 3 && b.length > 3) {
-      // If the same year
+      // If both date at least has 4 digits (e.g. year)
       if (a.substring(0, 4) == b.substring(0, 4)) {
-        // If the date contains month
+        // If release in the same year, then continue to compare. Otherwise,
+        // put the early year before
         if (a.length > 6 && b.length > 6) {
-          // If the same month
+          // If both dates have month
           if (a.substring(5, 7) == b.substring(5, 7)) {
-            // If full date, then compare day
+            // If the month is the same 
             if (a.length == 10 && b.length == 10) {
+              // If both are full date, compare the day
               return a.substring(8, 10) > b.substring(8, 10) ? 1 : -1;
             } else {
+              // Othrewise, put the shorter date before. Since the month is the
+              // same, this will put 2000.01 before 2000.01.01
               return a.length < b.length ? 1 : -1;
             }
           } else {
+            // If months are not the same put smaller month before.
             return a.substring(5, 7) > b.substring(5, 7) ? 1 : -1;
           }
         } else {
+          // If one of the date doesn't have month, put the shorter one before.
           return a.length < b.length ? 1 : -1;
         }
       } else {
+        // If years are not the same, put the smaller year before.
         return a.substring(0, 4) > b.substring(0, 4) ? 1 : -1;
       }
     } else {
@@ -214,6 +230,7 @@ export class GameListComponent {
     }
   }
 
+  // Merge sort a list of objects
   mergeSort(list: any[]): any[]{
     if (list.length == 0 || list.length == 1) {
       return list

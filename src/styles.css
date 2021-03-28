@@ -62,9 +62,6 @@ img.ex-link {
   height: 18px;
   width: 50px;
 }
-/*table{
-  table-layout: fixed;
-}*/
 @font-face {
   font-family: UC;
   src: url('/fonts/UnifrakturCook-Bold.ttf');
