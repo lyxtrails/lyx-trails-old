@@ -18,23 +18,14 @@ import { Router } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { HomeComponent } from './home/home.component';
-import { BlogComponent } from './blog/blog.component';
-import { CSWebDevComponent } from './computer_science/cs.webDev.component';
-import { CSAppDevComponent } from './computer_science/cs.appDev.component';
-import { CSAIComponent } from './computer_science/cs.ai.component';
-import { CSMLComponent } from './computer_science/cs.ml.component';
-import { LanguageComponent } from './language/language.component';
-import { LangJPComponent } from './language/japanese.component';
-import { LangENComponent } from './language/english.component';
-import { LangCHComponent } from './language/chinese.component';
-import { GameListComponent } from './game/list.component';
-import { GameGuideComponent } from './game/guide.component';
-import { RE7Component } from './game/guide/re7.component';
-import { GameResourceComponent } from './game/resource.component';
-import { GameComponent } from './game/game.component';
+import { HomeModule } from './home/home.module';
+import { CSModule } from './computer_science/cs.module';
+import { BlogModule } from './blog/blog.module';
+import { LanguageModule } from './language/language.module';
+import { GameModule } from './game/game.module';
+
 import { PageNotFoundComponent } from './not-found.component';
-import { MainPipe } from './pipes.module'
+import { PipeModule } from './pipe.module'
 
 @NgModule({
   imports: [
@@ -49,27 +40,18 @@ import { MainPipe } from './pipes.module'
     AngularFireAuthModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
-    MainPipe,
+    PipeModule,
     MatFormFieldModule,
     MatInputModule,
+
+    HomeModule,
+    BlogModule,
+    CSModule,
+    LanguageModule,
+    GameModule,
   ],
   declarations: [
     AppComponent,
-    HomeComponent,
-    BlogComponent,
-    CSWebDevComponent,
-    CSAppDevComponent,
-    CSAIComponent,
-    CSMLComponent,
-    LanguageComponent,
-    LangJPComponent,
-    LangENComponent,
-    LangCHComponent,
-    GameComponent,
-    GameListComponent,
-    GameGuideComponent,
-    RE7Component,
-    GameResourceComponent,
     PageNotFoundComponent,
   ],
   providers: [],

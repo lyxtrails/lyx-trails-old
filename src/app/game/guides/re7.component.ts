@@ -12,11 +12,10 @@ const converter = new showdown.Converter();
 
 @Component({
   template: `
-    <p>{{gameGuide}}</p>
     <div style="padding-left:20px" [innerHtml]="html | safeHtml"></div>
   `,
 })
-export class RE7Component {
+export class RE7GuideComponent {
   html = 'Loading';
   constructor(private http:Http) {
     this.readFile('re7.md')

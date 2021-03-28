@@ -7,13 +7,12 @@ import { BlogComponent } from './blog/blog.component'
 import { CSWebDevComponent } from './computer_science/cs.webDev.component'
 import { CSAppDevComponent } from './computer_science/cs.appDev.component'
 import { CSAIComponent } from './computer_science/cs.ai.component'
-import { CSMLComponent } from './computer_science/cs.ml.component'
 import { LangJPComponent } from './language/japanese.component'
 import { LangENComponent } from './language/english.component'
 import { LangCHComponent } from './language/chinese.component'
 import { GameListComponent } from './game/list.component';
 import { GameGuideComponent } from './game/guide.component';
-import { RE7Component } from './game/guide/re7.component';
+import { RE7GuideComponent } from './game/guides/re7.component';
 import { GameResourceComponent } from './game/resource.component';
 import { LanguageComponent } from './language/language.component'
 import { GameComponent } from './game/game.component'
@@ -24,14 +23,13 @@ const appRoutes: Routes = [
   { path: 'cs/webDev', component: CSWebDevComponent },
   { path: 'cs/appDev', component: CSAppDevComponent },
   { path: 'cs/ai', component: CSAIComponent },
-  { path: 'cs/ml', component: CSMLComponent },
   { path: 'language', component: LanguageComponent },
   { path: 'lang/en', component: LangENComponent },
   { path: 'lang/jp', component: LangJPComponent },
   { path: 'lang/ch', component: LangCHComponent },
   { path: 'game/list', component: GameListComponent },
   { path: 'game/guide', component: GameGuideComponent },
-  { path: 'game/guide/re7', component: RE7Component },
+  { path: 'game/guide/re7', component: RE7GuideComponent },
   { path: 'game/resource', component: GameResourceComponent },
   { path: 'game', component: GameComponent },
   { path: '',   redirectTo: '/home', pathMatch: 'full' },

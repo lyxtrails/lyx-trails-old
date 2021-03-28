@@ -11,9 +11,10 @@ import * as firebase from 'firebase/app';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  isCollapsed = false;
   title = 'LYX TRAILS';
 
-  constructor(private auth: AngularFireAuth) {}
+  constructor(public auth: AngularFireAuth) {}
 
   login() {
     this.auth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());

@@ -7,4 +7,4 @@ import { SafeHtmlPipe } from "./safeHtml.pipe";
   exports:[SafeHtmlPipe]
 })
 
-export class MainPipe{}
+export class PipeModule{}

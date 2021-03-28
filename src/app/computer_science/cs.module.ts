@@ -1,11 +1,18 @@
 import { NgModule }       from '@angular/core';
 
 import { CSComponent }     from './cs.component';
+import { CSAIComponent }     from './cs.ai.component';
+import { CSAppDevComponent }     from './cs.appDev.component';
+import { CSWebDevComponent }     from './cs.webDev.component';
+
+import { PipeModule } from '../pipe.module'
 
 @NgModule({
-  imports: [],
+  imports: [
+    PipeModule,
+  ],
   declarations: [
-    CSComponent
+    CSComponent, CSAIComponent, CSAppDevComponent, CSWebDevComponent
   ],
   providers: []
 })
