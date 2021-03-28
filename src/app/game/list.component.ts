@@ -18,7 +18,7 @@ import { Observable, of } from 'rxjs';
           <td>{{ game.platform }}</td>
           <td>{{ game.date }}</td>
           <td *ngIf="editMode" style="border:none">
-            <a (click)="removeItem(game.name)" style="color:#e05122;
+            <a (click)="removeItem('Tables/GameList/1st', game.name)" style="color:#e05122;
                padding-left: 20px;">Remove</a>
           </td>
         </tr>
@@ -26,24 +26,24 @@ import { Observable, of } from 'rxjs';
           <td>
             <mat-form-field>
               <mat-label style="color:white">Game Name</mat-label>
-              <input matInput placeholder="Kiseki">
+              <input #name1st matInput placeholder="Kiseki">
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
               <mat-label style="color:white">Platform</mat-label>
-              <input matInput placeholder="PS4/NS/etc">
+              <input #platform1st matInput placeholder="PS4/NS/etc">
             </mat-form-field>
           </td>
           <td>
             <mat-form-field>
               <mat-label style="color:white">Release Date</mat-label>
-              <input matInput placeholder="2020.01.01 or TBD or Released">
+              <input #date1st matInput placeholder="2020.01.01 or TBD or Released">
             </mat-form-field>
           </td>
           <td style="border:none;">
-            <a (click)="addItem('Tables/GameList/1st')" style="padding-left:20px;
-               cursor:pointer; color:#009111;">Add</a>
+            <a (click)="addItem('Tables/GameList/1st', name1st.value, platform1st.value, date1st.value)"
+               style="padding-left:20px; cursor:pointer; color:#009111;">Add</a>
           </td>
         </tr>
       </tbody>
@@ -58,6 +58,34 @@ import { Observable, of } from 'rxjs';
           <td>{{ game.name }}</td>
           <td>{{ game.platform }}</td>
           <td>{{ game.date }}</td>
+          <td *ngIf="editMode" style="border:none">
+            <a (click)="removeItem('Tables/GameList/2nd', game.name)" style="color:#e05122;
+               padding-left: 20px;">Remove</a>
+          </td>
+        </tr>
+        <tr *ngIf="editMode">
+          <td>
+            <mat-form-field>
+              <mat-label style="color:white">Game Name</mat-label>
+              <input #name2nd matInput placeholder="Kiseki">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-label style="color:white">Platform</mat-label>
+              <input #platform2nd matInput placeholder="PS4/NS/etc">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-label style="color:white">Release Date</mat-label>
+              <input #date2nd matInput placeholder="2020.01.01 or TBD or Released">
+            </mat-form-field>
+          </td>
+          <td style="border:none;">
+            <a (click)="addItem('Tables/GameList/2nd', name2nd.value, platform2nd.value, date2nd.value)"
+               style="padding-left:20px; cursor:pointer; color:#009111;">Add</a>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -71,6 +99,34 @@ import { Observable, of } from 'rxjs';
           <td>{{ game.name }}</td>
           <td>{{ game.platform }}</td>
           <td>{{ game.date }}</td>
+          <td *ngIf="editMode" style="border:none">
+            <a (click)="removeItem('Tables/GameList/3rd', game.name)" style="color:#e05122;
+               padding-left: 20px;">Remove</a>
+          </td>
+        </tr>
+        <tr *ngIf="editMode">
+          <td>
+            <mat-form-field>
+              <mat-label style="color:white">Game Name</mat-label>
+              <input #name3rd matInput placeholder="Kiseki">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-label style="color:white">Platform</mat-label>
+              <input #platform3rd matInput placeholder="PS4/NS/etc">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <mat-label style="color:white">Release Date</mat-label>
+              <input #date3rd matInput placeholder="2020.01.01 or TBD or Released">
+            </mat-form-field>
+          </td>
+          <td style="border:none;">
+            <a (click)="addItem('Tables/GameList/3rd', name3rd.value, platform3rd.value, date3rd.value)"
+               style="padding-left:20px; cursor:pointer; color:#009111;">Add</a>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -79,11 +135,50 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['../app.component.css'],
 })
 export class GameListComponent {
+  db: AngularFireDatabase;
   isAuthorized: boolean;
   editMode: boolean;
   gameList_1st: Observable<any>;
   gameList_2nd: Observable<any>;
   gameList_3rd: Observable<any>;
+
+  constructor(db: AngularFireDatabase, route: ActivatedRoute) {
+    this.db = db;
+    route.queryParams.subscribe(params => {
+        this.editMode = params['editMode'];
+    });
+
+    this.isAuthorized = true;
+    const tableNames = [
+      'Tables/GameList/1st',
+      'Tables/GameList/2nd',
+      'Tables/GameList/3rd',
+    ]
+    tableNames.forEach((tableName) => {
+      this.db.list(tableName).valueChanges()
+      .subscribe((list) => { 
+        switch(tableName) {
+          case 'Tables/GameList/1st':
+            this.gameList_1st = of(this.mergeSort(list))
+            break;
+          case 'Tables/GameList/2nd':
+            this.gameList_2nd = of(this.mergeSort(list))
+            break;
+          case 'Tables/GameList/3rd':
+            this.gameList_3rd = of(this.mergeSort(list))
+            break;
+          default:
+            throw 'Unknown table name'
+        }
+      }, (err) => {
+        if (err.code === 'PERMISSION_DENIED') {
+          this.isAuthorized = false;
+        }
+        console.log(err.code) 
+      });
+
+    })
+  }
 
   compare(obj1: any, obj2: any) {
     const a = obj1.date;
@@ -148,49 +243,21 @@ export class GameListComponent {
     }
   }
 
-  addItem(tableName: string) {
-    console.log(tableName)
-  }
-
-  removeItem(itemName: string) {
-    console.log(itemName)
-  }
-
-  constructor(db: AngularFireDatabase, route: ActivatedRoute) {
-
-    route.queryParams.subscribe(params => {
-        this.editMode = params['editMode'];
+  addItem(table: string, name: string, platform: string, date: string) {
+    const ref$ = this.db.object(table + '/' + name);
+    ref$.set({
+      name: name,
+      platform: platform,
+      date: date
     });
+  }
 
-    this.isAuthorized = true;
-    const tableNames = [
-      'Tables/GameList/1st',
-      'Tables/GameList/2nd',
-      'Tables/GameList/3rd',
-    ]
-    tableNames.forEach((tableName) => {
-      db.list(tableName).valueChanges()
-      .subscribe((list) => { 
-        switch(tableName) {
-          case 'Tables/GameList/1st':
-            this.gameList_1st = of(this.mergeSort(list))
-            break;
-          case 'Tables/GameList/2nd':
-            this.gameList_2nd = of(this.mergeSort(list))
-            break;
-          case 'Tables/GameList/3rd':
-            this.gameList_3rd = of(this.mergeSort(list))
-            break;
-          default:
-            throw 'Unknown table name'
-        }
-      }, (err) => {
-        if (err.code === 'PERMISSION_DENIED') {
-          this.isAuthorized = false;
-        }
-        console.log(err.code) 
-      });
-
+  removeItem(table: string, name: string) {
+    const ref$ = this.db.list(table, ref => 
+      ref.orderByChild('name').equalTo(name)
+    )
+    ref$.snapshotChanges().subscribe((list) => {
+      this.db.object(table + '/' + list[0].key).remove()
     })
   }
 }
