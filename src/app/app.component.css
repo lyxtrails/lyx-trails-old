@@ -134,3 +134,6 @@ body {
   margin: 0px;
   padding: 0px;
 }
+.mat-focused .mat-form-field-underline .mat-form-field-ripple{
+     color: white; 
+}
