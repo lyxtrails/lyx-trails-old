@@ -20,24 +20,25 @@ import { DatePipe } from '@angular/common';
       </li>
     </ul>
     <div *ngIf="editMode">
-      <mat-form-field style="width: 100%;">
+      <mat-form-field style="width: 100%;" floatLabel="always">
         <mat-label style="color:white">Title</mat-label>
-        <input #blogTitle matInput>
+        <input #blogTitle matInput placeholder="Blog title">
       </mat-form-field>
-      <mat-form-field style="width: 100%;">
+      <mat-form-field style="width: 100%;" floatLabel="always">
         <mat-label style="color:white">Content</mat-label>
-        <textarea #blogContent matInput></textarea>
+        <textarea #blogContent matInput placeholder="Blog content"></textarea>
       </mat-form-field>
-      <mat-form-field style="width: 100%;">
+      <mat-form-field style="width: 100%;" floatLabel="always">
         <mat-label style="color:white">Extra HTML</mat-label>
-        <textarea #blogExHtml matInput></textarea>
+        <textarea #blogExHtml matInput placeholder="Extra HTML will be displayed as html elements under content"></textarea>
       </mat-form-field>
       <button (click)="addBlog(blogTitle.value, blogContent.value, blogExHtml.value)"
               class="btn btn-secondary">
         Submit
       </button>
     </div>
-  `
+  `,
+  styleUrls: ['../app.component.css'],
 })
 
 export class BlogComponent {

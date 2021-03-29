@@ -60,3 +60,8 @@ $lyx-trails-theme: mat-light-theme($lyx-trails-primary, $lyx-trails-accent, $lyx
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($lyx-trails-theme);
+
+// Custom element colors
+.mat-form-field-underline {
+  background-color: white !important;
+} 

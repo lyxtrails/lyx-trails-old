@@ -24,24 +24,24 @@ import { Observable, of } from 'rxjs';
         </tr>
         <tr *ngIf="editMode">
           <td>
-            <mat-form-field>
-              <mat-label style="color:white">Game Name</mat-label>
+            <mat-form-field style="width:100%" floatLabel="always">
+              <mat-label style="color:white">Game Title</mat-label>
               <input #name1st matInput placeholder="Kiseki">
             </mat-form-field>
           </td>
           <td>
-            <mat-form-field>
+            <mat-form-field style="width:100%" floatLabel="always">
               <mat-label style="color:white">Platform</mat-label>
               <input #platform1st matInput placeholder="PS4/NS/etc">
             </mat-form-field>
           </td>
           <td>
-            <mat-form-field>
+            <mat-form-field style="width:100%" floatLabel="always">
               <mat-label style="color:white">Release Date</mat-label>
               <input #date1st matInput placeholder="2020.01.01 or TBD or Released">
             </mat-form-field>
           </td>
-          <td style="border:none;">
+          <td style="border:none; vertical-align:middle;">
             <a (click)="addItem('Tables/GameList/1st', name1st.value, platform1st.value, date1st.value)"
                style="padding-left:20px; cursor:pointer; color:#009111;">Add</a>
           </td>
@@ -65,24 +65,24 @@ import { Observable, of } from 'rxjs';
         </tr>
         <tr *ngIf="editMode">
           <td>
-            <mat-form-field>
-              <mat-label style="color:white">Game Name</mat-label>
+            <mat-form-field style="width:100%" floatLabel="always">
+              <mat-label style="color:white">Game Title</mat-label>
               <input #name2nd matInput placeholder="Kiseki">
             </mat-form-field>
           </td>
           <td>
-            <mat-form-field>
+            <mat-form-field style="width:100%" floatLabel="always">
               <mat-label style="color:white">Platform</mat-label>
               <input #platform2nd matInput placeholder="PS4/NS/etc">
             </mat-form-field>
           </td>
           <td>
-            <mat-form-field>
+            <mat-form-field style="width:100%" floatLabel="always">
               <mat-label style="color:white">Release Date</mat-label>
               <input #date2nd matInput placeholder="2020.01.01 or TBD or Released">
             </mat-form-field>
           </td>
-          <td style="border:none;">
+          <td style="border:none; vertical-align:middle;">
             <a (click)="addItem('Tables/GameList/2nd', name2nd.value, platform2nd.value, date2nd.value)"
                style="padding-left:20px; cursor:pointer; color:#009111;">Add</a>
           </td>
@@ -106,24 +106,24 @@ import { Observable, of } from 'rxjs';
         </tr>
         <tr *ngIf="editMode">
           <td>
-            <mat-form-field>
-              <mat-label style="color:white">Game Name</mat-label>
+            <mat-form-field style="width:100%" floatLabel="always">
+              <mat-label style="color:white">Game Title</mat-label>
               <input #name3rd matInput placeholder="Kiseki">
             </mat-form-field>
           </td>
           <td>
-            <mat-form-field>
+            <mat-form-field style="width:100%" floatLabel="always">
               <mat-label style="color:white">Platform</mat-label>
               <input #platform3rd matInput placeholder="PS4/NS/etc">
             </mat-form-field>
           </td>
           <td>
-            <mat-form-field>
+            <mat-form-field style="width:100%" floatLabel="always">
               <mat-label style="color:white">Release Date</mat-label>
               <input #date3rd matInput placeholder="2020.01.01 or TBD or Released">
             </mat-form-field>
           </td>
-          <td style="border:none;">
+          <td style="border:none; vertical-align:middle;">
             <a (click)="addItem('Tables/GameList/3rd', name3rd.value, platform3rd.value, date3rd.value)"
                style="padding-left:20px; cursor:pointer; color:#009111;">Add</a>
           </td>
