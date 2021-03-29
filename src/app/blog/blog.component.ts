@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -11,7 +12,7 @@ import { DatePipe } from '@angular/common';
         <a *ngIf="editMode" style="color:#e05122; padding-right:10px; cursor:pointer;"
            (click)="deleteBlog(blog['docID'])">Delete</a>
         <a style="cursor:pointer;" data-toggle="collapse" [attr.data-target]="'#blog'+i">
-          {{blog['date']}} {{blog['title']}}
+          {{blog['date']}}&nbsp;&nbsp;{{blog['title']}}
         </a>
         <div [attr.id]="'blog'+i" class="collapse" data-parent="#blogList" style="margin-left: 2em;">
           {{blog['content']}}
@@ -47,7 +48,13 @@ export class BlogComponent {
   editMode: boolean;
   constructor(private af: AngularFirestore, route: ActivatedRoute) {
     this.db = af;
-    this.blogs = this.db.collection('Blogs').valueChanges({idField: 'docID'})
+    this.blogs = this.db.collection('Blogs')
+      .valueChanges({idField: 'docID'})
+      .pipe(
+        map(results => results.sort((a, b) => {
+          return a["date"] > b["date"] ? -1 : 1
+        }))
+      )
     route.queryParams.subscribe(params => {
         this.editMode = params['editMode'];
     });
