@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DatePipe } from '@angular/common';
+import { MatPaginatorModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { DatePipe } from '@angular/common';
     PipeModule,
     BrowserModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatPaginatorModule
   ],
   declarations: [
     BlogComponent,

@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   template: `
+
     <ul style="list-style-type: none;" id="blogList">
-      <li *ngFor="let blog of blogs | async; let i = index" >
+      <li *ngFor="let blog of blogsPage; let i = index" >
         <a *ngIf="editMode" style="color:#e05122; padding-right:10px; cursor:pointer;"
            (click)="deleteBlog(blog['docID'])">Delete</a>
         <a style="cursor:pointer;" data-toggle="collapse" [attr.data-target]="'#blog'+i">
@@ -20,6 +22,15 @@ import { DatePipe } from '@angular/common';
         </div>
       </li>
     </ul>
+
+    <mat-paginator (page)="handlePageEvent($event)"
+                   [length]="blogsLength"
+                   [pageSize]="pageSize"
+                   [showFirstLastButtons]="showFirstLastButtons"
+                   [pageSizeOptions]="pageSizeOptions"
+                   [pageIndex]="pageIndex">
+    </mat-paginator>
+
     <div *ngIf="editMode">
       <mat-form-field style="width: 100%;" floatLabel="always">
         <mat-label style="color:white">Title</mat-label>
@@ -44,20 +55,49 @@ import { DatePipe } from '@angular/common';
 
 export class BlogComponent {
   db: AngularFirestore;
-  blogs: Observable<any[]>;
+  blogs = [];
   editMode: boolean;
+
+  blogsLength = 10;
+  pageIndex = 0;
+  pageSizeOptions = [1, 5, 10, 25];
+  pageSize = this.pageSizeOptions[0];
+  showFirstLastButtons = true;
+  blogsPage = [];
+
   constructor(private af: AngularFirestore, route: ActivatedRoute) {
     this.db = af;
-    this.blogs = this.db.collection('Blogs')
-      .valueChanges({idField: 'docID'})
-      .pipe(
-        map(results => results.sort((a, b) => {
-          return a["date"] > b["date"] ? -1 : 1
-        }))
-      )
     route.queryParams.subscribe(params => {
         this.editMode = params['editMode'];
     });
+  }
+
+
+  ngOnInit() {
+    this.db.collection('Blogs')
+    .valueChanges({idField: 'docID'})
+    .pipe(
+      map((results) => {
+        return results.sort((a, b) => a["date"] > b["date"] ? -1 : 1)
+      })
+    )
+    .subscribe(results => {
+      this.blogs = results;
+      this.blogsLength = results.length;
+      this.setBlogsPage();
+    })
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.setBlogsPage();
+  }
+
+  setBlogsPage() {
+    let totalCount = this.blogs.length;
+    let startIdx = this.pageIndex * this.pageSize;
+    this.blogsPage = this.blogs.slice(startIdx, Math.min(totalCount, startIdx+this.pageSize))
   }
 
   addBlog(title: string, content: string, exHtml: string) {
