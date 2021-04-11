@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 
 @Component({
   template: `
+    <h2>Game Guide</h2>
     <ul style="list-style-type: none;" id="gameGuides">
       <li *ngFor="let co of gameGuide | async; let i = index" >
         <a style="cursor:pointer;" data-toggle="collapse" [attr.data-target]="'#co'+i">

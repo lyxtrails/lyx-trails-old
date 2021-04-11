@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   template:  `
+    <h2>PSN Profiles</h2>
     <div>
       <p>
         <a href="https://psnprofiles.com/YxLJ"><img src="https://card.psnprofiles.com/2/YxLJ.png" border="0"></a>

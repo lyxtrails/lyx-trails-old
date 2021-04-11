@@ -1,0 +1,40 @@
+<ul style="list-style-type: none;" id="blogList">
+  <li *ngFor="let blog of blogsPage; let i = index" >
+    <a *ngIf="editMode" style="color:#e05122; padding-right:10px; cursor:pointer;"
+       (click)="deleteBlog(blog['docID'])">Delete</a>
+    <a style="cursor:pointer;" data-toggle="collapse" [attr.data-target]="'#blog'+i">
+      {{blog['date']}}&nbsp;&nbsp;{{blog['title']}}
+    </a>
+    <div [attr.id]="'blog'+i" class="collapse" data-parent="#blogList" style="margin-left: 2em;">
+      {{blog['content']}}
+      <div [innerHTML]="blog['html'] | safeHtml"></div>
+    </div>
+  </li>
+</ul>
+
+<mat-paginator (page)="handlePageEvent($event)"
+               [length]="blogsLength"
+               [pageSize]="pageSize"
+               [showFirstLastButtons]="showFirstLastButtons"
+               [pageSizeOptions]="pageSizeOptions"
+               [pageIndex]="pageIndex">
+</mat-paginator>
+
+<div *ngIf="editMode">
+  <mat-form-field style="width: 100%;" floatLabel="always">
+    <mat-label style="color:white">Title</mat-label>
+    <input #blogTitle matInput placeholder="Blog title">
+  </mat-form-field>
+  <mat-form-field style="width: 100%;" floatLabel="always">
+    <mat-label style="color:white">Content</mat-label>
+    <textarea #blogContent matInput placeholder="Blog content"></textarea>
+  </mat-form-field>
+  <mat-form-field style="width: 100%;" floatLabel="always">
+    <mat-label style="color:white">Extra HTML</mat-label>
+    <textarea #blogExHtml matInput placeholder="Extra HTML will be displayed as html elements under content"></textarea>
+  </mat-form-field>
+  <button (click)="addBlog(blogTitle.value, blogContent.value, blogExHtml.value)"
+          class="btn btn-secondary">
+    Submit
+  </button>
+</div>
