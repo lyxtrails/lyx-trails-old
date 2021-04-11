@@ -3,9 +3,10 @@
     <a *ngIf="editMode" style="color:#e05122; padding-right:10px; cursor:pointer;"
        (click)="deleteBlog(blog['docID'])">Delete</a>
     <a style="cursor:pointer;" data-toggle="collapse" [attr.data-target]="'#blog'+i">
-      {{blog['date']}}&nbsp;&nbsp;{{blog['title']}}
+      <span style="font-family: 'Brush Script MT, monospace';">{{blog['date']}}</span>&nbsp;&nbsp;{{blog['title']}}
     </a>
     <div [attr.id]="'blog'+i" class="collapse" data-parent="#blogList" style="margin-left: 2em;">
+      <div *ngIf="blog['content'] == ''">No Content</div>
       {{blog['content']}}
       <div [innerHTML]="blog['html'] | safeHtml"></div>
     </div>
@@ -19,6 +20,8 @@
                [pageSizeOptions]="pageSizeOptions"
                [pageIndex]="pageIndex">
 </mat-paginator>
+
+<br/>
 
 <div *ngIf="editMode">
   <mat-form-field style="width: 100%;" floatLabel="always">

@@ -9,8 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "dev": "ng serve --port 5000",
-    "update-db:gamelist": "firebase database:update /Tables/GameList database/Tables/GameList.json",
-    "update-db:gameguide": "firebase database:update /Tables/GameGuide database/Tables/GameGuide.json"
+    "prod": "ng serve --prod --port 5000"
   },
   "private": true,
   "dependencies": {

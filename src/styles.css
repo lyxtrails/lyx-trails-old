@@ -62,15 +62,9 @@ a:hover {
   color: white !important;
 }
 
-
 /* For Latex */
 ruby { ruby-align: center; }
 rt, rp {font-size: 70%;}
-
-/* For Angular Material */
-.mat-input-element::placeholder {
-  color:grey!important;
-}
 
 /* Override the background color dropdown item, otherwise it will be dark blue */
 .dropdown-item:active, .dropdown-item:visited, .dropdown-item:hover  {

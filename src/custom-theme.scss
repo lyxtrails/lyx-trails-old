@@ -64,4 +64,21 @@ $lyx-trails-theme: mat-light-theme($lyx-trails-primary, $lyx-trails-accent, $lyx
 // Custom element colors
 .mat-form-field-underline {
   background-color: white !important;
-} 
+}
+
+.mat-input-element::placeholder {
+  color: grey !important;
+}
+.mat-paginator .mat-paginator-container {
+  color: white !important;
+  background-color: #363A3D !important;
+}
+.mat-paginator .mat-select-value {
+  color: white !important;
+}
+.mat-paginator .mat-select-arrow {
+  color: white !important;
+}
+.mat-icon-buton {
+  color: white !important;
+}

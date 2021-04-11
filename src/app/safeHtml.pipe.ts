@@ -11,7 +11,7 @@ export class SafeHtmlPipe implements PipeTransform {
     if(value) {
       return this.sanitized.bypassSecurityTrustHtml(value);
     } else {
-      return 'Undefined HTML';
+      return '';
     }
   }
 }
