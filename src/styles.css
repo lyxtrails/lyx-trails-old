@@ -69,7 +69,7 @@ rt, rp {font-size: 70%;}
 
 /* For Angular Material */
 .mat-input-element::placeholder {
-  color:grey;
+  color:grey!important;
 }
 
 /* Override the background color dropdown item, otherwise it will be dark blue */
