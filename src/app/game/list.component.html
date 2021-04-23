@@ -7,8 +7,8 @@
         <td>{{ game.platform }}</td>
         <td>{{ game.date }}</td>
         <td *ngIf="editMode" style="border:none">
-          <a (click)="removeItem('Tables/GameList/1st', game.key)" style="color:#e05122;
-             padding-left: 20px;">Remove</a>
+          <a (click)="removeItem(gameTable.table, game.key)" style="color:#e05122;
+             padding-left: 20px; cursor:pointer;">Remove</a>
         </td>
       </tr>
       <tr *ngIf="editMode">

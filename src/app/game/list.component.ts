@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageDialogComponent } from '../dialogs/messageDialog.component';
 
@@ -49,7 +50,16 @@ export class GameListComponent {
 
     this.gameTables.forEach((gameTable) => {
       let tableName = gameTable['table']
-      this.db.list(gameTable['table']).valueChanges()
+      this.db.list(gameTable['table']).snapshotChanges()
+      .pipe(
+        map((items) => {
+          return items.map((item) => {
+            const key = item.payload.key;
+            const data = item.payload.val();
+            return { key, ...data };
+          });
+        })
+      )
       .subscribe((list) => { 
         gameTable['list'] = of(this.mergeSort(list))
       });
