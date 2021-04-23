@@ -2,7 +2,7 @@
   "rules": {
     "Tables": {
       "GameList": {
-        ".read": "auth.uid === 'IR3G58r6BSdZ0d5BARtz4Ub8CzM2'",
+        ".read": true,
         ".write": "auth.uid === 'IR3G58r6BSdZ0d5BARtz4Ub8CzM2'"
       },
       "$other": {
