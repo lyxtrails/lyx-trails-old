@@ -19,6 +19,7 @@ import { CSModule } from './computer_science/cs.module';
 import { BlogModule } from './blog/blog.module';
 import { LanguageModule } from './language/language.module';
 import { GameModule } from './game/game.module';
+import { DialogModule } from './dialogs/dialog.module'
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { GameModule } from './game/game.module';
     CSModule,
     LanguageModule,
     GameModule,
+    DialogModule,
   ],
   declarations: [
     AppComponent,

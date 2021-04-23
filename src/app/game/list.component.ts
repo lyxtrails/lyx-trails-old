@@ -3,180 +3,56 @@ import { Component } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageDialogComponent } from '../dialogs/messageDialog.component';
+
+const TAG_RELEASED = 'Released';
+const TAG_TBD = 'TBD';
+const dateRe = /(?<year>\d{4})([.](?<month>\d{2})|)([.](?<day>\d{2})|)/;
+
+interface GameTableRow {
+  key: string,
+  name: string,
+  platform: string,
+  date: string,
+}
 
 @Component({
-  template: `
-  <div *ngIf="isAuthorized === false; else showGameList">
-    You are not authorized to view this page.
-  </div>
-  <ng-template #showGameList>
-    <table class="table table-inverse" style="table-layout: fixed;">
-      <thead><th style="border:none"><strong>1st</strong></th></thead>
-      <tbody>
-        <tr *ngFor="let game of gameList_1st | async">
-          <td>{{ game.name }}</td>
-          <td>{{ game.platform }}</td>
-          <td>{{ game.date }}</td>
-          <td *ngIf="editMode" style="border:none">
-            <a (click)="removeItem('Tables/GameList/1st', game.name)" style="color:#e05122;
-               padding-left: 20px;">Remove</a>
-          </td>
-        </tr>
-        <tr *ngIf="editMode">
-          <td>
-            <mat-form-field style="width:100%" floatLabel="always">
-              <mat-label style="color:white">Game Title</mat-label>
-              <input #name1st matInput placeholder="Kiseki">
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field style="width:100%" floatLabel="always">
-              <mat-label style="color:white">Platform</mat-label>
-              <input #platform1st matInput placeholder="PS4/NS/etc">
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field style="width:100%" floatLabel="always">
-              <mat-label style="color:white">Release Date</mat-label>
-              <input #date1st matInput placeholder="2020.01.01 or TBD or Released">
-            </mat-form-field>
-          </td>
-          <td style="border:none; vertical-align:middle;">
-            <a (click)="addItem('Tables/GameList/1st', name1st.value, platform1st.value, date1st.value)"
-               style="padding-left:20px; cursor:pointer; color:#009111;">Add</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <br>
-
-    <table class="table table-inverse" style="table-layout: fixed;">
-      <thead><th style="border:none"><strong>2nd</strong></th></thead>
-      <tbody>
-        <tr *ngFor="let game of gameList_2nd | async">
-          <td>{{ game.name }}</td>
-          <td>{{ game.platform }}</td>
-          <td>{{ game.date }}</td>
-          <td *ngIf="editMode" style="border:none">
-            <a (click)="removeItem('Tables/GameList/2nd', game.name)" style="color:#e05122;
-               padding-left: 20px;">Remove</a>
-          </td>
-        </tr>
-        <tr *ngIf="editMode">
-          <td>
-            <mat-form-field style="width:100%" floatLabel="always">
-              <mat-label style="color:white">Game Title</mat-label>
-              <input #name2nd matInput placeholder="Kiseki">
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field style="width:100%" floatLabel="always">
-              <mat-label style="color:white">Platform</mat-label>
-              <input #platform2nd matInput placeholder="PS4/NS/etc">
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field style="width:100%" floatLabel="always">
-              <mat-label style="color:white">Release Date</mat-label>
-              <input #date2nd matInput placeholder="2020.01.01 or TBD or Released">
-            </mat-form-field>
-          </td>
-          <td style="border:none; vertical-align:middle;">
-            <a (click)="addItem('Tables/GameList/2nd', name2nd.value, platform2nd.value, date2nd.value)"
-               style="padding-left:20px; cursor:pointer; color:#009111;">Add</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <br>
-
-    <table class="table table-inverse" style="table-layout: fixed;">
-      <thead><th style="border:none"><strong>3rd</strong></th></thead>
-      <tbody>
-        <tr *ngFor="let game of gameList_3rd | async">
-          <td>{{ game.name }}</td>
-          <td>{{ game.platform }}</td>
-          <td>{{ game.date }}</td>
-          <td *ngIf="editMode" style="border:none">
-            <a (click)="removeItem('Tables/GameList/3rd', game.name)" style="color:#e05122;
-               padding-left: 20px;">Remove</a>
-          </td>
-        </tr>
-        <tr *ngIf="editMode">
-          <td>
-            <mat-form-field style="width:100%" floatLabel="always">
-              <mat-label style="color:white">Game Title</mat-label>
-              <input #name3rd matInput placeholder="Kiseki">
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field style="width:100%" floatLabel="always">
-              <mat-label style="color:white">Platform</mat-label>
-              <input #platform3rd matInput placeholder="PS4/NS/etc">
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field style="width:100%" floatLabel="always">
-              <mat-label style="color:white">Release Date</mat-label>
-              <input #date3rd matInput placeholder="2020.01.01 or TBD or Released">
-            </mat-form-field>
-          </td>
-          <td style="border:none; vertical-align:middle;">
-            <a (click)="addItem('Tables/GameList/3rd', name3rd.value, platform3rd.value, date3rd.value)"
-               style="padding-left:20px; cursor:pointer; color:#009111;">Add</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </ng-template>
-  `,
+  templateUrl: './list.component.html',
   styleUrls: ['../app.component.css'],
 })
 export class GameListComponent {
-  db: AngularFireDatabase;
-  isAuthorized: boolean;
   editMode: boolean;
-  gameList_1st: Observable<any>;
-  gameList_2nd: Observable<any>;
-  gameList_3rd: Observable<any>;
 
-  constructor(db: AngularFireDatabase, route: ActivatedRoute) {
-    this.db = db;
+  gameTables = [
+    {
+      'header': '1st',
+      'list': new Observable<GameTableRow[]>(),
+      'table': 'Tables/GameList/1st'
+    },
+    {
+      'header': '2nd',
+      'list': new Observable<GameTableRow[]>(),
+      'table': 'Tables/GameList/2nd'
+    },
+    {
+      'header': '3rd',
+      'list': new Observable<GameTableRow[]>(),
+      'table': 'Tables/GameList/3rd'
+    }
+  ]
+
+  constructor(public db: AngularFireDatabase, public dialog: MatDialog, route: ActivatedRoute) {
     route.queryParams.subscribe(params => {
         this.editMode = params['editMode'];
     });
 
-    this.isAuthorized = true;
-    const tableNames = [
-      'Tables/GameList/1st',
-      'Tables/GameList/2nd',
-      'Tables/GameList/3rd',
-    ]
-    tableNames.forEach((tableName) => {
-      this.db.list(tableName).valueChanges()
+    this.gameTables.forEach((gameTable) => {
+      let tableName = gameTable['table']
+      this.db.list(gameTable['table']).valueChanges()
       .subscribe((list) => { 
-        switch(tableName) {
-          case 'Tables/GameList/1st':
-            this.gameList_1st = of(this.mergeSort(list))
-            break;
-          case 'Tables/GameList/2nd':
-            this.gameList_2nd = of(this.mergeSort(list))
-            break;
-          case 'Tables/GameList/3rd':
-            this.gameList_3rd = of(this.mergeSort(list))
-            break;
-          default:
-            throw 'Unknown table name'
-        }
-      }, (err) => {
-        if (err.code === 'PERMISSION_DENIED') {
-          this.isAuthorized = false;
-        }
-        console.log(err.code) 
+        gameTable['list'] = of(this.mergeSort(list))
       });
-
     })
   }
 
@@ -185,49 +61,45 @@ export class GameListComponent {
   // 2. TBD is after the one that has release date.
   // 3. Dates are sorted chronologically.
   // 4. Less specific dates are put before mroe specific date (e.g. 2000.01 is before 2000.01.01)
-  compare(obj1: any, obj2: any) {
-    const a = obj1.date;
-    const b = obj2.date;
-    if (a == "Released" || b == "Released") {
-      // Put a after b is a is Released, since we don't care the order if
-      // both released
-      return a == "Released" ? 1 : -1;
-    } else if (a == "TBD" || b == "TBD") {
-      // Put a after b is a is TBD, since we don't care the order if both
-      // TBD
-      return a == "TBD" ? 1 : -1;
-    } else if (a.length > 3 && b.length > 3) {
-      // If both date at least has 4 digits (e.g. year)
-      if (a.substring(0, 4) == b.substring(0, 4)) {
-        // If release in the same year, then continue to compare. Otherwise,
-        // put the early year before
-        if (a.length > 6 && b.length > 6) {
-          // If both dates have month
-          if (a.substring(5, 7) == b.substring(5, 7)) {
-            // If the month is the same 
-            if (a.length == 10 && b.length == 10) {
-              // If both are full date, compare the day
-              return a.substring(8, 10) > b.substring(8, 10) ? 1 : -1;
-            } else {
-              // Othrewise, put the shorter date before. Since the month is the
-              // same, this will put 2000.01 before 2000.01.01
-              return a.length < b.length ? 1 : -1;
-            }
-          } else {
-            // If months are not the same put smaller month before.
-            return a.substring(5, 7) > b.substring(5, 7) ? 1 : -1;
-          }
-        } else {
-          // If one of the date doesn't have month, put the shorter one before.
-          return a.length < b.length ? 1 : -1;
-        }
-      } else {
-        // If years are not the same, put the smaller year before.
-        return a.substring(0, 4) > b.substring(0, 4) ? 1 : -1;
-      }
-    } else {
-      return a.length < b.length ? 1 : -1;
+  compare(row1: GameTableRow, row2: GameTableRow) {
+    if (row1 === undefined || row2 === undefined) {
+      return row1 === undefined ? 1 : -1;
     }
+
+    for (const tag of [TAG_RELEASED, TAG_TBD]) {
+      if (row1.date == tag || row2.date == tag) {
+        return row1.date == tag ? 1 : -1;
+      }
+      if (row1.date == tag && row2.date == tag) {
+        return row1.name > row2.name ? 1 : -1;
+      }
+    }
+
+    const m1 = dateRe.exec(row1.date);
+    const m2 = dateRe.exec(row2.date);
+    if (m1 === null || m2 === null) {
+      return m1 === null ? 1 : -1;
+    }
+
+    const g1 = m1.groups
+    const g2 = m2.groups
+    if (g1.year != g2.year) {
+      return g1.year > g2.year ? 1 : -1
+    }
+    if (g1.month != g2.month) {
+      if (g1.month === undefined || g2.month === undefined) {
+        return g1.month === undefined ? 1 : -1;
+      }
+      return g1.month > g2.month ? 1 : -1
+    }
+    if (g1.day != g2.day) {
+      if (g1.day === undefined || g2.day === undefined) {
+        return g1.day === undefined ? 1 : -1;
+      }
+      return g1.day > g2.day ? 1 : -1
+    }
+
+    return row1.name > row2.name ? 1 : -1;
   }
 
   // Merge sort a list of objects
@@ -266,15 +138,31 @@ export class GameListComponent {
       name: name,
       platform: platform,
       date: date
+    })
+    .catch((err) => {
+      if (err.code === 'PERMISSION_DENIED') {
+        this.openDialog('User does not have permission to add item.')
+      } else {
+        this.openDialog('Got error: ' + err.code)
+      }
     });
   }
 
-  removeItem(table: string, name: string) {
-    const ref$ = this.db.list(table, ref => 
-      ref.orderByChild('name').equalTo(name)
-    )
-    ref$.snapshotChanges().subscribe((list) => {
-      this.db.object(table + '/' + list[0].key).remove()
-    })
+  removeItem(table: string, key: string) {
+    this.db.object(table + '/' + key).remove()
+    .catch((err) => {
+      if (err.code === 'PERMISSION_DENIED') {
+        this.openDialog('User does not have permission to remove item.')
+      } else {
+        this.openDialog('Got error: ' + err.code)
+      }
+    });
+  }
+
+  openDialog(msg: string) {
+    const dialogRef = this.dialog.open(MessageDialogComponent, {
+      width: '250px',
+      data: { message: msg }
+    });
   }
 }

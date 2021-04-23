@@ -8,10 +8,11 @@ import { GameResourceComponent } from './resource.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserModule } from '@angular/platform-browser'
+import { DialogModule } from '../dialogs/dialog.module'
 
 @NgModule({
   imports: [
-    GameGuideModule, MatFormFieldModule, MatInputModule, BrowserModule
+    GameGuideModule, MatFormFieldModule, MatInputModule, BrowserModule, DialogModule
   ],
   declarations: [
     GameComponent, GameListComponent, GameResourceComponent
