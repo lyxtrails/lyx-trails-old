@@ -85,7 +85,10 @@ $lyx-trails-theme: mat-light-theme($lyx-trails-primary, $lyx-trails-accent, $lyx
   color: white !important;
   background-color: #363A3D !important;
 }
-.mat-dialog-actions {
+.mat-dialog-actions > button {
   color: white !important;
   background-color: #363A3D !important;
+}
+.mat-button:focus {
+  outline: none;
 }

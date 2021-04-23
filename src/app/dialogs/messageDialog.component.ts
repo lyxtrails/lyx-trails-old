@@ -12,7 +12,7 @@ export interface DialogData {
       <p>{{data.message}}</p>
     </div>
     <div mat-dialog-actions>
-      <button mat-button (click)="onCloseClick()">Close</button>
+      <button mat-button cdkFocusInitial (click)="onCloseClick()">Close</button>
     </div>
   `,
 })
