@@ -42,7 +42,7 @@ export class GameListComponent {
     }
   ]
 
-  constructor(public db: AngularFireDatabase, public dialog: MatDialog, route: ActivatedRoute) {
+  constructor(private db: AngularFireDatabase, private dialog: MatDialog, route: ActivatedRoute) {
     route.queryParams.subscribe(params => {
         this.editMode = params['editMode'];
     });

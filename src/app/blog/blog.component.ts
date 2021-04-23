@@ -5,6 +5,8 @@ import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 import { PageEvent } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageDialogComponent } from '../dialogs/messageDialog.component';
 
 @Component({
   templateUrl: './blog.component.html',
@@ -12,7 +14,6 @@ import { PageEvent } from '@angular/material/paginator';
 })
 
 export class BlogComponent {
-  db: AngularFirestore;
   blogs = [];
   editMode: boolean;
 
@@ -23,15 +24,14 @@ export class BlogComponent {
   showFirstLastButtons = true;
   blogsPage = [];
 
-  constructor(private af: AngularFirestore, route: ActivatedRoute) {
-    this.db = af;
+  constructor(private af: AngularFirestore, private dialog: MatDialog, route: ActivatedRoute) {
     route.queryParams.subscribe(params => {
         this.editMode = params['editMode'];
     });
   }
 
   ngOnInit() {
-    this.db.collection('Blogs')
+    this.af.collection('Blogs')
     .valueChanges({idField: 'docID'})
     .pipe(
       map((results) => {
@@ -60,15 +60,36 @@ export class BlogComponent {
   addBlog(title: string, content: string, exHtml: string) {
     const datepipe: DatePipe = new DatePipe('en-US')
     let date = datepipe.transform(new Date(), 'yyyy.MM.dd hh:mm:ss')
-    this.db.collection("Blogs").add({
+    this.af.collection("Blogs").add({
         title: title,
         date: date,
         content: content,
         html: exHtml
     })
+    .catch((err) => {
+      if (err.code === 'permission-denied') {
+        this.openDialog('User does not have permission to add item.')
+      } else {
+        this.openDialog('Got error: ' + err.code)
+      }
+    });
   }
 
   deleteBlog(docID: string) {
-    this.db.collection("Blogs").doc(docID).delete()
+    this.af.collection("Blogs").doc(docID).delete()
+    .catch((err) => {
+      if (err.code === 'permission-denied') {
+        this.openDialog('User does not have permission to add item.')
+      } else {
+        this.openDialog('Got error: ' + err.code)
+      }
+    });
+  }
+
+  openDialog(msg: string) {
+    const dialogRef = this.dialog.open(MessageDialogComponent, {
+      width: '250px',
+      data: { message: msg }
+    });
   }
 }
